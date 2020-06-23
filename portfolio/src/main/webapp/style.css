@@ -3,7 +3,9 @@
   margin-right: auto;
   width: 650px;
 }
-
+img{
+    align-content: left
+}
 #greeting-container {
   margin-top: 20px;
 }
