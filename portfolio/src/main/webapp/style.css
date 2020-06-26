@@ -8,8 +8,7 @@
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
-  color: white;
-  z-index: 0;
+    color: white;
 }
 
 #welcome #tophalf {
@@ -40,17 +39,64 @@ h1 {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-#greeting-container {
-  margin-top: 20px;
-}
+
 
 #whoami {
-  height: 100vh
+  position: relative;
+  background-color: white;
+  /* background-color: #f5f0e1; */
+  overflow: hidden;
+  font-size: max(12px, 1vw);
+  height: 1000px;
 }
 
-#whoami h2 {
+#whoami h3{
+  color: #ff6e40;
+  font-weight: 300;
   font-family: 'Lato', sans-serif;
   text-align: center;
+}
+
+#whoami #details {
+  background-color: #1e3d59;
+  color: white;
+  width: 60%;
+  height: 100%;
+  padding-bottom: 1%;
+  float: left;
+  padding-left: 2%;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  font-size: max(1vw,20px);
+}
+#imdets {
+  position: absolute;
+  bottom: 10%;
+  height: max(12vw,240px);
+  width: max(40vw,800px);
+  margin-left: auto;
+  margin-right: auto;
+  left:0;
+  right:0;
+
+}
+#imgback {
+  float: left;
+  width: 25%;
+  height:100%;
+  padding-top: 1%;
+  background-color: #1e3d59;
+  padding-right: 3%;
+  padding-left: 3%;
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+h2 {
+  font-family: 'Lato', sans-serif;
+  font-size: max(60px, 4vw);
+  font-weight: 300;
+  text-align: center;
+  margin-top: 10vh;
 }
 
 body {
@@ -58,5 +104,28 @@ body {
 }
 
 #whoami img {
-  width: 10%;
+  width: 100%;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: #ff6e40;
+  background-color: #1e3d59;
+  border-width: 5px;
+  float: left;
+  margin-top: 5%;
 }
+
+#abtme {
+  padding-left: 3%;
+  padding-right:3%;
+  font-size: max(30px, 1.7vw);
+}
+
+#experiences{
+  background-color: #f5f0e1;
+  overflow: hidden;
+}
+
+hr{
+  width: 50%;
+}
+
