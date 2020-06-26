@@ -123,9 +123,48 @@ body {
 #experiences{
   background-color: #f5f0e1;
   overflow: hidden;
+  padding-bottom: 3%;
 }
 
 hr{
   width: 50%;
 }
 
+#experiences h3 {
+  font-family: 'Lato';
+  font-weight:300;
+  font-size: 45px;
+  color: #1e3d59;
+  margin-left: 10%;
+}
+
+#experiences #content {
+  padding-left: 3%;
+}
+
+.collapsible {
+  width: 60vw;
+  background-color: rgba(255,255,255,0.3);
+  margin:auto;
+  margin-top: 1%;
+}
+
+.collapsible p{
+  float: right;
+  padding-right: 3%;
+  padding-top: 0.6%;
+  font-size: min(20px,1.7vw);
+}
+
+.collapsible h4{
+  display: inline-block;
+  padding-left: 3%;
+  font-family: 'Lato',sans-serif;
+  font-size: min(20px,1.7vw);
+
+}
+
+.content-collapse {
+  width: 30vw;
+  margin-left: 23%;
+}
