@@ -26,3 +26,40 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+var projdiv = document.getElementsByClassName("one-project");
+var i;
+for (i=0 ; i < projdiv.length; i++){
+
+  projdiv[i].addEventListener("mouseover", function(){
+    if(this.style.maxHeight!=="500px"){
+      console.log("mouseover")
+      this.style.backgroundPosition="8% 100%"
+    }
+  })
+
+  projdiv[i].addEventListener("mouseout", function(){
+    if(this.style.maxHeight!=="500px"){
+      console.log("mouseexit")
+      this.style.backgroundPosition="0% 100%"
+    }
+  })
+
+  projdiv[i].addEventListener("click", function(){
+    var head = this.getElementsByTagName("h4")[0];
+    if (this.style.maxHeight!=="500px"){
+      this.style.maxHeight="500px"
+      this .style.backgroundPosition="100% 100%";
+      this.style.color="white"
+    }
+    else{
+      this.style.maxHeight="4vw"
+      this.style.backgroundPosition="8% 100%";
+      this.style.color="black"
+
+    }
+  })
+
+  
+
+}
