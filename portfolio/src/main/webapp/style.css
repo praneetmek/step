@@ -132,7 +132,7 @@ hr {
 #experiences h3 {
   font-family: 'Lato';
   font-weight: 300;
-  font-size: 45px;  
+  font-size: 45px;
   color: #1e3d59;
   margin-left: 20%;
 }
@@ -143,9 +143,9 @@ hr {
 
 .collapsible {
   width: 60vw;
-  background-color: rgb(245,240,225);
+  background-color: rgb(245, 240, 225);
   margin: auto;
-  margin-top:0;
+  margin-top: 0;
 }
 
 .collapsible p {
@@ -164,32 +164,31 @@ hr {
 
 .content-collapse {
   width: 60vw;
-  margin:0;
+  margin: 0;
   padding-bottom: 1%;
   padding-top: 2%;
   margin-left: auto;
   margin-right: auto;
-  background-color: rgba(245,240,225,0.3);
-  font-size: max(12px,1vw);
-
+  background-color: rgba(245, 240, 225, 0.3);
+  font-size: max(12px, 1vw);
 }
+
 .content-collapse p {
   margin-top: 0;
   margin-left: 2%;
 }
 
-
 #projects {
   background-color: #1e3d59;
   overflow: hidden;
   color: white;
-  height: 80vh;
+  padding-bottom: 10vh;
 }
 
 .one-project {
   color: black;
   background-position: left bottom;
-  transition: all 0.5s ease;
+  transition: all 0.7s ease;
   margin-top: 3%;
   width: 60vw;
   margin-left: auto;
@@ -199,25 +198,29 @@ hr {
   overflow: hidden;
   cursor: pointer;
   background: linear-gradient(to right, white 50%, #ff6e40 50%);
-  background-size: 200% 100%;
+  background-size: 202% 100%;
+  z-index: 1;
 }
-
-
 
 .one-project h4 {
   text-align: center;
   margin-top: 20px;
   font-size: 2vw;
   font-family: 'Lato', sans-serif;
-
   height: 100%;
   padding-top: 1.5%;
   padding-bottom: 1.5%;
-  margin:0;
+  margin: 0;
 }
 
-.one-project p {
+.one-project p,
+.one-project ul {
   margin-left: 3%;
   font-size: 30px;
 }
 
+.one-project a {
+  color: black;
+  transition: all 0.7s ease;
+  z-index: 2;
+}
