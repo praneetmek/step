@@ -21,6 +21,7 @@ function getRandomQuote() {
   // The fetch() function returns a Promise because the request is asynchronous.
   const responsePromise = fetch('/random-quote');
 
+  console.log(responsePromise)
   // When the request is complete, pass the response into handleResponse().
   responsePromise.then(handleResponse);
 }
@@ -39,6 +40,8 @@ function handleResponse(response) {
   // When the response is converted to text, pass the result into the
   // addQuoteToDom() function.
   textPromise.then(addQuoteToDom);
+  console.log("textPromise is" + textPromise)
+
 }
 
 /** Adds a random quote to the DOM. */
