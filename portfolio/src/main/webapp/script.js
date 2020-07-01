@@ -75,7 +75,8 @@ for (i = 0; i < projdiv.length; i++) {
 }
 
 function readFromServlet() {
-    fetch('/data').then(response => response.text()).then((quote)=>{
-        document.getElementById("servlet-test").innerText=quote;
+    fetch('/data').then(response => response.json()).then((json_list)=>{
+        console.log(json_list);
+        document.getElementById("servlet-test").innerText=json_list;
     })
 }
