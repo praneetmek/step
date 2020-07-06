@@ -142,6 +142,15 @@
       </ul>
     </div>
   </div>
+ <br/>
+  <select name="num-comm" id="num-comms">
+    <option value="5">5</option>
+    <option value="10" selected="selected">10</option>
+    <option value="15">15</option>
+    <option value="20">20</option>
+  </select>
+
+
   <form action="/data" method="POST">
 
       <p>Subtract:</p>
@@ -149,9 +158,17 @@
       <br/><br/>
       <input type="submit" />
   </form>
+
   <div id="servlet-test">
       
   </div>
+
+
+  </br>
+  <button type="button" onclick="deleteAllComments()"> Clear all comments </button>
+
+
+
 
 
 

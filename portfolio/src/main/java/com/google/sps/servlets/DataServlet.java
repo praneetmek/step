@@ -23,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Query.SortDirection;
+
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
@@ -32,16 +34,17 @@ import com.google.appengine.api.datastore.Query;
 public class DataServlet extends HttpServlet {
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment");
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);;
+
     PreparedQuery commentQuery = datastore.prepare(query);
 
-    ArrayList<String> comments = new ArrayList<>();
-    for (Entity entity : commentQuery.asIterable()){
-        String comment= (String) entity.getProperty("text");
-        comments.add(comment);
-    }
+    int numberOfComments = getNumberOfComments(request);
+
+    ArrayList<String> comments = getComments(commentQuery, numberOfComments);
+    
     String jsonString = convertToJsonUsingGson(comments);
     response.setContentType("text/json;");
     response.getWriter().println(jsonString);
@@ -50,9 +53,14 @@ public class DataServlet extends HttpServlet {
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
       String newComment = request.getParameter("comment-box");
-      
+      long timestamp = System.currentTimeMillis();
+
+
       Entity commentEntity=new Entity("Comment");
+
+      
       commentEntity.setProperty("text", newComment);
+      commentEntity.setProperty("timestamp", timestamp);
       datastore.put(commentEntity);
 
       response.sendRedirect("/index.html#servlet-test");
@@ -63,5 +71,34 @@ public class DataServlet extends HttpServlet {
     Gson gson = new Gson();
     String json = gson.toJson(messages);
     return json;
+  }
+
+  private int getNumberOfComments(HttpServletRequest request){
+      String numCommString = request.getParameter("numcomm");
+      int numComm;
+      if (numCommString == ""){
+          return 20;
+      }
+      try{
+          numComm=Integer.parseInt(numCommString);
+          return numComm;
+      } catch (NumberFormatException e){
+          return 20;
+      }
+  }
+
+
+  private ArrayList<String> getComments(PreparedQuery commQuery, int numComms){
+    ArrayList<String> comments = new ArrayList<>();
+    int i=0;
+    for (Entity entity : commQuery.asIterable()){
+        if(i==numComms){
+            break;
+        }
+        String comment= (String) entity.getProperty("text");
+        comments.add(comment);
+        i++;
+    }
+    return comments;
   }
 }

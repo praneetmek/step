@@ -18,19 +18,6 @@
 
 max_height = "5000px"
 
-function addRandomGreeting() {
-
-  const greetings = ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
-}
-
 var projdiv = document.getElementsByClassName("one-project");
 var i;
 for (i = 0; i < projdiv.length; i++) {
@@ -75,8 +62,24 @@ for (i = 0; i < projdiv.length; i++) {
 }
 
 function readFromServlet() {
-    fetch('/data').then(response => response.json()).then((json_list)=>{
+    var selectable=document.getElementById("num-comms");
+    var number=selectable.options[selectable.selectedIndex].value;
+    fetch('/data?numcomm='+number).then(response => response.json()).then((json_list)=>{
         console.log(json_list);
         document.getElementById("servlet-test").innerText=json_list;
+    })
+}
+
+document.getElementById("num-comms").addEventListener("change", function(){
+    console.log('changed')
+    readFromServlet()
+});
+
+function deleteAllComments(){
+    console.log('here')
+    fetch('/delete-data',{
+        method: 'POST'
+    }).then(response => response.text()).then(text=>{
+        readFromServlet();        
     })
 }
