@@ -25,18 +25,23 @@ import java.util.*;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+    
+  private ArrayList<String> comments = new ArrayList<>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      ArrayList<String> comments = new ArrayList<>();
-      comments.add("Great Website!");
-      comments.add("Cool colors!");
-      comments.add("wowowoowoww");
-
     String jsonString=convertToJsonUsingGson(comments);
 
     response.setContentType("text/json;");
     response.getWriter().println(jsonString);
+  }
+
+
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      String newComment = request.getParameter("comment-box");
+      comments.add(newComment);
+      response.sendRedirect("/index.html#servlet-test");
+
   }
 
   private String convertToJsonUsingGson(ArrayList<String> messages) {
