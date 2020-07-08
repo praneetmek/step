@@ -7,10 +7,11 @@
   <title>My Portfolio</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIeibmO_l3EHhxB88au_HHbD8mD3CYPGg&callback=createMap" type="text/javascript"></script>
 
 </head>
 
-<body onload="readFromServlet()">
+<body onload="createMap()">
   <div id="welcome">
     <div id="tophalf">
       <h2 id="intro">Hello, I'm</h2>
@@ -167,9 +168,7 @@
   </br>
   <button type="button" onclick="deleteAllComments()"> Clear all comments </button>
 
-
-
-
+  <div id="map"></div>
 
 
   <script src="script.js"></script>

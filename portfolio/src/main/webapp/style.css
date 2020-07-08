@@ -224,3 +224,9 @@ hr {
   transition: all 0.7s ease;
   z-index: 2;
 }
+
+#map {
+  border: thin solid black;
+  height: 500px;
+  width: 500px;
+}
