@@ -89,3 +89,25 @@ function createMap() {
       document.getElementById('map'),
       {center: {lat: 37.422, lng: -122.084}, zoom: 16});
 }
+
+function commentStatusCheck(){
+    fetch('/loginstatus').then(response => response.json()).then(object => {
+        var loginLink=document.getElementById("login");
+        loginLink.href = object.logInOutURL;
+        if (object.loggedIn){
+            document.getElementById("comment-form").style.display="block";
+
+            loginLink.innerText="Click here to log out";
+        }
+        else {
+            document.getElementById("comment-form").style.display="none";
+            loginLink.innerText="Click here to log in"
+        }
+    })
+}
+
+function onStart(){
+    readFromServlet();
+    commentStatusCheck();
+    createMap();
+}
