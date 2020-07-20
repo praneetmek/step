@@ -16,7 +16,7 @@
  * Adds a random greeting to the page.
  */
 
-max_height = "5000px"
+max_height = "1000px"
 
 var projdiv = document.getElementsByClassName("one-project");
 var i;
@@ -41,9 +41,10 @@ for (i = 0; i < projdiv.length; i++) {
     if (this.style.maxHeight !== max_height) {
       this.style.maxHeight = max_height;
       this.style.backgroundPosition = "100% 100%";
-      this.style.color = "white"
+      this.style.color = "black"
+      this.getElementsByTagName('h4')[0].style.color="white"
 
-      this.getElementsByTagName('a')[0].style.color = "white"
+      this.getElementsByTagName('a')[0].style.color = "black"
       setTimeout(function() {
         this.scrollIntoView(false)
       }, 100)
@@ -53,6 +54,8 @@ for (i = 0; i < projdiv.length; i++) {
       this.style.maxHeight = "4vw"
       this.style.backgroundPosition = "8% 100%";
       this.style.color = "black"
+      this.getElementsByTagName('h4')[0].style.color="black"
+
       this.getElementsByTagName('a')[0].style.color = "black"
 
 
@@ -63,16 +66,20 @@ for (i = 0; i < projdiv.length; i++) {
 
 function readFromServlet() {
     var selectable=document.getElementById("num-comms");
+    var commentsArea=document.getElementById("comments-real");
     var number=selectable.options[selectable.selectedIndex].value;
     fetch('/data?numcomm='+number).then(response => response.json()).then((json_list)=>{
         console.log(json_list);
-        document.getElementById("servlet-test").innerText=json_list;
+        commentsArea.innerHTML="";
+        for(var i=0; i<json_list.length;i++){
+            createComment(json_list[i]);
+        }
     })
 }
 
-document.getElementById("num-comms").addEventListener("change", function(){
-    console.log('changed')
-    readFromServlet()
+$("#num-comms").change(function(){
+    console.log('changed');
+    readFromServlet();
 });
 
 function deleteAllComments(){
@@ -84,24 +91,25 @@ function deleteAllComments(){
     })
 }
 
-function createMap() {
-  const map = new google.maps.Map(
-      document.getElementById('map'),
-      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
-}
 
 function commentStatusCheck(){
     fetch('/loginstatus').then(response => response.json()).then(object => {
-        var loginLink=document.getElementById("login");
-        loginLink.href = object.logInOutURL;
         if (object.loggedIn){
-            document.getElementById("comment-form").style.display="block";
+            
+            $('#comment-desc').html("Leave a comment! (<a href="+object.logInOutURL+">Log out </a>)"); 
 
-            loginLink.innerText="Click here to log out";
+            document.getElementById("comment-form").style.display="block";
+            $('#text-input').prop('disabled',false);
+            $('#post-comment').css('cursor', 'pointer');
+
+
         }
         else {
-            document.getElementById("comment-form").style.display="none";
-            loginLink.innerText="Click here to log in"
+           // document.getElementById("comment-form").style.display="none";
+            $('#comment-desc').html("<a href="+object.logInOutURL+">Log in </a> to comment!"); 
+            $('#text-input').prop('disabled',true);
+            $('#post-comment').attr('disabled',true);
+            $('#post-comment').css('cursor', 'not-allowed');
         }
     })
 }
@@ -110,4 +118,21 @@ function onStart(){
     readFromServlet();
     commentStatusCheck();
     createMap();
+}
+
+function createComment(commentObject){
+    var commentContainer= document.getElementById("comments-real");
+    var commentBox= document.createElement("div");
+    commentBox.classList.add("comment-box");
+
+    var name=document.createElement("h4");
+    name.classList.add("username");
+    name.innerHTML=commentObject.accountName;
+
+    var comment=document.createElement("p");
+    comment.innerHTML=commentObject.text;
+
+    commentBox.appendChild(name);
+    commentBox.appendChild(comment);
+    commentContainer.appendChild(commentBox);
 }

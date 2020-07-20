@@ -36,15 +36,20 @@ public class LoginStatus extends HttpServlet {
     public final class JsonHelper{
         private final boolean loggedIn;
         private final String logInOutURL;
-        public JsonHelper(Boolean loggedIn, String logInOutURL){
+        private final String accountName;
+        public JsonHelper(Boolean loggedIn, String logInOutURL, String accountName){
             this.loggedIn=loggedIn;
             this.logInOutURL=logInOutURL;
+            this.accountName=accountName;
         }
         public boolean getLoggedIn(){
             return loggedIn;
         }
         public String getLogInOutURL(){
             return logInOutURL;
+        }
+        public String getAccountName(){
+            return accountName;
         }
     }
 
@@ -59,11 +64,13 @@ public class LoginStatus extends HttpServlet {
     JsonHelper jsonHelper;
 
     if(userService.isUserLoggedIn()){
-        jsonHelper = new JsonHelper(true,userService.createLogoutURL("/index.html"));
+
+        String acctname = userService.getCurrentUser().getEmail();
+        jsonHelper = new JsonHelper(true,userService.createLogoutURL("/index.html#comment-area"), acctname);
 
     }
     else{
-        jsonHelper = new JsonHelper(false,userService.createLoginURL("/index.html"));
+        jsonHelper = new JsonHelper(false,userService.createLoginURL("/index.html#comment-area"), "");
     }
     String jsonString = gson.toJson(jsonHelper);
     response.getWriter().println(jsonString);

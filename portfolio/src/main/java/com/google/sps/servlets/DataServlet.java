@@ -24,7 +24,8 @@ import java.util.*;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Query.SortDirection;
-
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
@@ -43,7 +44,7 @@ public class DataServlet extends HttpServlet {
 
     int numberOfComments = getNumberOfComments(request);
 
-    ArrayList<String> comments = getComments(commentQuery, numberOfComments);
+    ArrayList<Comment> comments = getComments(commentQuery, numberOfComments);
     
     String jsonString = convertToJsonUsingGson(comments);
     response.setContentType("text/json;");
@@ -55,21 +56,24 @@ public class DataServlet extends HttpServlet {
       String newComment = request.getParameter("comment-box");
       long timestamp = System.currentTimeMillis();
 
+      UserService userService = UserServiceFactory.getUserService();
+
+
 
       Entity commentEntity=new Entity("Comment");
 
-      
+      commentEntity.setProperty("user", userService.getCurrentUser().getEmail());
       commentEntity.setProperty("text", newComment);
       commentEntity.setProperty("timestamp", timestamp);
       datastore.put(commentEntity);
 
-      response.sendRedirect("/index.html#servlet-test");
+      response.sendRedirect("/index.html#comment-area");
 
   }
 
-  private String convertToJsonUsingGson(ArrayList<String> messages) {
+  private String convertToJsonUsingGson(ArrayList<Comment> comments) {
     Gson gson = new Gson();
-    String json = gson.toJson(messages);
+    String json = gson.toJson(comments);
     return json;
   }
 
@@ -88,17 +92,35 @@ public class DataServlet extends HttpServlet {
   }
 
 
-  private ArrayList<String> getComments(PreparedQuery commQuery, int numComms){
-    ArrayList<String> comments = new ArrayList<>();
+  private ArrayList<Comment> getComments(PreparedQuery commQuery, int numComms){
+    ArrayList<Comment> comments = new ArrayList<>();
     int i=0;
     for (Entity entity : commQuery.asIterable()){
         if(i==numComms){
             break;
         }
         String comment= (String) entity.getProperty("text");
-        comments.add(comment);
+        String accountName = (String) entity.getProperty("user");
+
+        comments.add(new Comment(accountName,comment));
         i++;
     }
     return comments;
+  }
+
+
+  public final class Comment{
+        private final String accountName;
+        private final String text;
+        public Comment(String accountName, String text){
+            this.accountName=accountName;
+            this.text=text;
+        }
+        public String getAccountName(){
+            return accountName;
+        }
+        public String getText(){
+            return text;
+        }
   }
 }
