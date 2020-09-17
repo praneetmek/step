@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+    // Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,20 +16,7 @@
  * Adds a random greeting to the page.
  */
 
-max_height = "5000px"
-
-function addRandomGreeting() {
-
-  const greetings = ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
-}
+max_height = "1000px"
 
 var projdiv = document.getElementsByClassName("one-project");
 var i;
@@ -54,9 +41,10 @@ for (i = 0; i < projdiv.length; i++) {
     if (this.style.maxHeight !== max_height) {
       this.style.maxHeight = max_height;
       this.style.backgroundPosition = "100% 100%";
-      this.style.color = "white"
+      this.style.color = "black"
+      this.getElementsByTagName('h4')[0].style.color="white"
 
-      this.getElementsByTagName('a')[0].style.color = "white"
+      this.getElementsByTagName('a')[0].style.color = "black"
       setTimeout(function() {
         this.scrollIntoView(false)
       }, 100)
@@ -66,6 +54,8 @@ for (i = 0; i < projdiv.length; i++) {
       this.style.maxHeight = "4vw"
       this.style.backgroundPosition = "8% 100%";
       this.style.color = "black"
+      this.getElementsByTagName('h4')[0].style.color="black"
+
       this.getElementsByTagName('a')[0].style.color = "black"
 
 
@@ -75,8 +65,74 @@ for (i = 0; i < projdiv.length; i++) {
 }
 
 function readFromServlet() {
-    fetch('/data').then(response => response.json()).then((json_list)=>{
+    var selectable=document.getElementById("num-comms");
+    var commentsArea=document.getElementById("comments-real");
+    var number=selectable.options[selectable.selectedIndex].value;
+    fetch('/data?numcomm='+number).then(response => response.json()).then((json_list)=>{
         console.log(json_list);
-        document.getElementById("servlet-test").innerText=json_list;
+        commentsArea.innerHTML="";
+        for(var i=0; i<json_list.length;i++){
+            createComment(json_list[i]);
+        }
     })
+}
+
+$("#num-comms").change(function(){
+    console.log('changed');
+    readFromServlet();
+});
+
+function deleteAllComments(){
+    console.log('here')
+    fetch('/delete-data',{
+        method: 'POST'
+    }).then(response => response.text()).then(text=>{
+        readFromServlet();        
+    })
+}
+
+
+function commentStatusCheck(){
+    fetch('/loginstatus').then(response => response.json()).then(object => {
+        if (object.loggedIn){
+            
+            $('#comment-desc').html("Leave a comment! (<a href="+object.logInOutURL+">Log out </a>)"); 
+
+            document.getElementById("comment-form").style.display="block";
+            $('#text-input').prop('disabled',false);
+            $('#post-comment').css('cursor', 'pointer');
+
+
+        }
+        else {
+           // document.getElementById("comment-form").style.display="none";
+            $('#comment-desc').html("<a href="+object.logInOutURL+">Log in </a> to comment!"); 
+            $('#text-input').prop('disabled',true);
+            $('#post-comment').attr('disabled',true);
+            $('#post-comment').css('cursor', 'not-allowed');
+        }
+    })
+}
+
+function onStart(){
+    readFromServlet();
+    commentStatusCheck();
+    createMap();
+}
+
+function createComment(commentObject){
+    var commentContainer= document.getElementById("comments-real");
+    var commentBox= document.createElement("div");
+    commentBox.classList.add("comment-box");
+
+    var name=document.createElement("h4");
+    name.classList.add("username");
+    name.innerHTML=commentObject.accountName;
+
+    var comment=document.createElement("p");
+    comment.innerHTML=commentObject.text;
+
+    commentBox.appendChild(name);
+    commentBox.appendChild(comment);
+    commentContainer.appendChild(commentBox);
 }

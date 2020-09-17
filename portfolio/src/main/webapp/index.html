@@ -7,10 +7,12 @@
   <title>My Portfolio</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIeibmO_l3EHhxB88au_HHbD8mD3CYPGg&callback=createMap" type="text/javascript"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 
-<body onload="readFromServlet()">
+<body onload="onStart();">
   <div id="welcome">
     <div id="tophalf">
       <h2 id="intro">Hello, I'm</h2>
@@ -37,7 +39,7 @@
       science is in simulation softwares. I love working through problems, trying different approaches until I reach an end point that I'm satisfied with. </p>
     <div id="imdets">
       <div id="imgback">
-        <img src="images/me.jpg">
+        <img src="images/waterfall_profile.png">
       </div>
       <div id="details">
         <h3>Details</h3>
@@ -82,7 +84,7 @@
     <!-- <div class="content-cover"> -->
     <div class="content-collapse">
       <p>High school dedicated to STEM fields. Only offered in 11th and 12th grade. 11th grade consisted of STEM focused high school classes and multiple long term projects (see projects section). 12th grade was consisted of entirely college classes taught
-        in the Worcester Polytechnic Institute (WPI). Honed my Java skills over these two years
+        in the Worcester Polytechnic Institute (WPI). Honed my Java skills over these two years.
       </p>
     </div>
     <!-- </div> -->
@@ -142,10 +144,82 @@
       </ul>
     </div>
   </div>
-  <div id="servlet-test">
 
-  </div>
+    <div id="skills">
+        <h2> Skills </h2>
+        <hr>
+        <div id='top-skills'>
+            <div id="languages" class="skill-specific">
+                <h3>Programming Languages</h3>
+                <ul class="skill-type">
+                    <li><span class="skill-name">Python</span> <span class="proficiency">&#9733 &#9733 &#9733 &#9733 &#9733</span></li>
+                    <li><span class="skill-name">Java</span> <span class="proficiency">&#9733 &#9733 &#9733 &#9733 &#9733</span></li>
+                    <li><span class="skill-name">Julia</span> <span class="proficiency">&#9733 &#9733 &#9733 &#9733 &#9734</span></li>
+                    <li><span class="skill-name">HTML</span> <span class="proficiency">&#9733 &#9733 &#9733 &#9733 &#9734</span></li>
+                    <li><span class="skill-name">CSS</span> <span class="proficiency">&#9733 &#9733 &#9733 &#9733 &#9734</span></li>
+                    <li><span class="skill-name">JavaScript</span> <span class="proficiency">&#9733 &#9733 &#9733 &#9734 &#9734</span></li>
+                    <li><span class="skill-name">C/C++</span> <span class="proficiency">&#9733 &#9733 &#9734 &#9734 &#9734</span></li>
+                </ul>
+                </div>
+
+            <div id="environments" class="skill-specific">
+                <h3>Environments/Programs</h3>
+                <ul class="skill-type">
+                    <li><span class="skill-name">IntelliJ/PyCharm</span> <span class="proficiency">&#9733 &#9733 &#9733 &#9733 &#9733</span></li>
+                    <li><span class="skill-name">Android Studio</span> <span class="proficiency">&#9733 &#9733 &#9733 &#9733 &#9734</span></li>
+                    <li><span class="skill-name">VSCode</span> <span class="proficiency">&#9733 &#9733 &#9733 &#9733 &#9734</span></li>
+                    <li><span class="skill-name">Mathematica</span> <span class="proficiency">&#9733 &#9733 &#9733 &#9733 &#9734</span></li>
+                    <li><span class="skill-name">Jupyter Notebook</span> <span class="proficiency">&#9733 &#9733 &#9733 &#9733 &#9734</span></li>
+                    <li><span class="skill-name">Spyder</span> <span class="proficiency">&#9733 &#9733 &#9733 &#9734 &#9734</span></li>
+                    <li><span class="skill-name">Matlab</span> <span class="proficiency">&#9733 &#9733 &#9734 &#9734 &#9734</span></li>
+                    <li><span class="skill-name">Maple</span> <span class="proficiency">&#9733 &#9733 &#9734 &#9734 &#9734</span></li>
+               
+                </ul>
+            </div>
+        </div>  
+    </div>
+
+    <div id="comments-section">
+        
+
+
+        <form id="comment-form" action="/data" method="POST">
+
+            <h3 id="comment-desc">Leave a comment!</h3>
+            <input id="text-input" type="text" name="comment-box">
+            <br/><br/>
+            <input id="post-comment" type="submit" value="Post" />
+        </form>
+
+        <div id="comment-area">
+            <h3>Comments: </h3>
+            <p id="num-comm-desc"> Number of comments to display: </p>
+            <select name="num-comm" id="num-comms">
+                <option value="5">5</option>
+                <option value="10" selected="selected">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
+            <div id="comments-real">
+            </div>
+
+        </div>
+  </br>
+  <button id="delete" type="button" onclick="deleteAllComments()"> Clear all comments </button>
+
+
+    </div>
+
+
+
+  <div id="map"></div>
+
+  <script src="states/alabama.js"></script>
+  <script src="states/alaska.js"></script>
+  <script src="mapCreation.js"></script>
   <script src="script.js"></script>
+
+
 
 </body>
 

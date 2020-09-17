@@ -1,6 +1,6 @@
 #welcome {
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   font-family: 'Lato', sans-serif;
   text-align: center;
   overflow: hidden;
@@ -197,7 +197,8 @@ hr {
   max-height: 4vw;
   overflow: hidden;
   cursor: pointer;
-  background: linear-gradient(to right, white 50%, #ff6e40 50%);
+  background: linear-gradient(to right, rgba(255,255,255) 50%, #ff6e40 50%);
+
   background-size: 202% 100%;
   z-index: 1;
 }
@@ -211,12 +212,15 @@ hr {
   padding-top: 1.5%;
   padding-bottom: 1.5%;
   margin: 0;
+  transition: all 0.7s ease;
+
 }
 
 .one-project p,
 .one-project ul {
   margin-left: 3%;
-  font-size: 30px;
+  font-size: max(12px,1.2vw);
+  margin-right: 3%;
 }
 
 .one-project a {
@@ -224,3 +228,138 @@ hr {
   transition: all 0.7s ease;
   z-index: 2;
 }
+
+#map {
+  border: thin solid black;
+  height: 500px;
+  width: 500px;
+}
+
+.skill-specific {
+    width: 40vw;
+}
+
+.skill-specific h3 {
+    text-align: center;
+    font-family: 'Lato',sans-serif;
+    font-size: 1.6vw;
+}
+
+#languages ul {
+    list-style-type: none;
+}
+
+.skill-specific li {
+    margin-left: 0;
+    font-size: 1.3vw;
+    overflow:hidden;
+    width: 35vw;
+    padding: 3px;
+}
+.skill-specific li:hover{
+    border-style: solid;
+    border-color: #1e3d59;
+}
+
+.skill-name {
+    display:block;
+    float: left;
+}
+.proficiency {
+    display: block;
+    float: right;
+    color: #1e3d59;
+}
+
+#top-skills {
+    overflow: hidden;
+}
+#languages {
+    float: left;
+    margin-left: 7vw;
+
+}
+
+#environments {
+    float: right;
+    margin-right: 7vw;
+}
+
+#skills {
+    padding-bottom: 5vw;
+}
+
+
+
+#comment-area{
+    width: 60vw;
+    margin: auto;
+    margin-top:6vw;
+}
+#comment-area h3 {
+    font-size: 1.6vw;
+    margin-bottom: 0;
+}
+
+
+.comment-box{
+    font-size: 1vw;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    border-style:none none solid none;
+    border-color: white;
+    padding-left: 0.5vw;
+}
+
+#comment-form {
+    width: 60vw;
+    margin: auto;
+    text-align: center;
+}
+
+#comment-form h3{
+    font-size: 1.5vw;
+    font-family: 'Lato',sans-serif;
+}
+
+#text-input {
+    width: 100%;
+    font-size: 1.1vw;
+    padding: 20px;
+}
+
+
+#num-comm-desc {
+    display: inline;
+}
+
+#comments-section {
+    background-color:black;
+    color:white;
+    padding-top: 5vw;
+}
+
+#comments-section input[type="submit"] {
+    all:unset;
+    color: white;
+    background: linear-gradient(to right, black 50%, white 50%);
+    transition: background-position 0.5s ease, color 0.5s ease;
+
+    background-size: 202% 100%;
+
+    border-color: white;
+    border-style: solid;
+    font-size: 1vw;
+    font-family: 'Lato',sans-serif;
+    width:4vw;
+    height: 2vw;
+    padding: 0.5vw;
+
+    border-radius: 25% / 50%;
+    float: right;
+}
+
+#comments-section input[type="submit"]:hover {
+    background-position: 99% 100%;
+    color:black;
+} 
